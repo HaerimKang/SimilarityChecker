@@ -7,11 +7,11 @@ public:
 	SimilarityChecker checker;
 };
 
-TEST_F(SimilarityCheckerFixture, SameLength) {
+TEST_F(SimilarityCheckerFixture, GetLengthPointWhenSameLength) {
 	EXPECT_EQ(60, checker.getLengthPoint("ASD", "DSA"));
 }
 
-TEST_F(SimilarityCheckerFixture, DoubleLength) {
+TEST_F(SimilarityCheckerFixture, GetLengthPointWhenDoubleLength) {
 	EXPECT_EQ(0, checker.getLengthPoint("A", "BB"));
 }
 
