@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -16,7 +17,26 @@ public:
 
 	int getAlphaPoint(string str1, string str2)
 	{
-		return 40;
+		map<char, bool> hasAlphabet;
+		for(int i=0; i< str1.length(); ++i)
+		{
+			hasAlphabet.insert({ str1[i],true });
+		}
+
+		for (int i = 0; i < str2.length(); ++i)
+		{
+			if(hasAlphabet.find(str2[i])!= hasAlphabet.end())
+			{
+				hasAlphabet.erase(str2[i]);
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		if (hasAlphabet.size() == 0) return 40;
+		else return 0;
+		
 	}
 
 private:
