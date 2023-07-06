@@ -24,3 +24,7 @@ TEST_F(SimilarityCheckerFixture, GetAlphaPointWhenSame) {
 	EXPECT_EQ(40, checker.getAlphaPoint("ASD", "DSA"));
 	EXPECT_EQ(40, checker.getAlphaPoint("AAABB", "BA"));
 }
+
+TEST_F(SimilarityCheckerFixture, GetAlphaPointWhenDifferentAll) {
+	EXPECT_EQ(0, checker.getAlphaPoint("A", "BB"));
+}

@@ -23,19 +23,22 @@ public:
 			hasAlphabet.insert({ str1[i],true });
 		}
 
+		bool isFound = false;
 		for (int i = 0; i < str2.length(); ++i)
 		{
 			if(hasAlphabet.find(str2[i])!= hasAlphabet.end())
 			{
+				isFound = true;
 				hasAlphabet.erase(str2[i]);
 			}
 			else
 			{
-				return 0;
+				
 			}
 		}
 		if (hasAlphabet.size() == 0) return 40;
-		else return 0;
+		else if (isFound == false) return 0;
+		else return 3;
 		
 	}
 
