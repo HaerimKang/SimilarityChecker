@@ -14,3 +14,8 @@ TEST_F(SimilarityCheckerFixture, SameLength) {
 TEST_F(SimilarityCheckerFixture, DoubleLength) {
 	EXPECT_EQ(0, checker.getLengthPoint("A", "BB"));
 }
+
+TEST_F(SimilarityCheckerFixture, GetLengthPointWhenDifferentText) {
+	EXPECT_EQ(20, checker.getLengthPoint("AAABB", "BAA"));
+	EXPECT_EQ(30, checker.getLengthPoint("AA", "AAE"));
+}
