@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class SimilarityChecker {
@@ -11,6 +12,11 @@ public:
 		if (isSameLength(A, B)) return MAX_LENGTH_POINT;
 		if (isDoubleLengthGap(A, B)) return MIN_LENGTH_POINT;
 		return getPartialLengthPoint(A, B);
+	}
+
+	int getAlphaPoint(string str1, string str2)
+	{
+		return 40;
 	}
 
 private:

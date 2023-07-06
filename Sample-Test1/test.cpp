@@ -19,3 +19,8 @@ TEST_F(SimilarityCheckerFixture, GetLengthPointWhenDifferentText) {
 	EXPECT_EQ(20, checker.getLengthPoint("AAABB", "BAA"));
 	EXPECT_EQ(30, checker.getLengthPoint("AA", "AAE"));
 }
+
+TEST_F(SimilarityCheckerFixture, GetAlphaPointWhenSame) {
+	EXPECT_EQ(40, checker.getAlphaPoint("ASD", "DSA"));
+	EXPECT_EQ(40, checker.getAlphaPoint("AAABB", "BA"));
+}
