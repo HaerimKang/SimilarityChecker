@@ -24,6 +24,7 @@ public:
 		}
 
 		bool isFound = false;
+		bool isDifferent = false;
 		for (int i = 0; i < str2.length(); ++i)
 		{
 			if(hasAlphabet.find(str2[i])!= hasAlphabet.end())
@@ -33,13 +34,52 @@ public:
 			}
 			else
 			{
-				
+				isDifferent = true;
 			}
 		}
-		if (hasAlphabet.size() == 0) return 40;
+		if (hasAlphabet.size() == 0 && isDifferent == false) return 40;
 		else if (isFound == false) return 0;
-		else return 3;
-		
+		else
+		{
+			hasAlphabet.clear();
+			//모든 알파벳 저장
+			for (int i = 0; i < str1.length(); ++i)
+			{
+				if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
+				{
+					hasAlphabet.insert({ str1[i],true });
+				}
+			}
+			for (int i = 0; i < str2.length(); ++i)
+			{
+				if (hasAlphabet.find(str2[i]) == hasAlphabet.end())
+				{
+					hasAlphabet.insert({ str2[i],true });
+				}
+			}
+			int totalAlphabetCnt = hasAlphabet.size();
+
+			//같은 알파벳 개수 세기
+			hasAlphabet.clear();
+			//모든 알파벳 저장
+			for (int i = 0; i < str1.length(); ++i)
+			{
+				if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
+				{
+					hasAlphabet.insert({ str1[i],true });
+				}
+			}
+			int sameAlphabetCnt = 0;
+			for (int i = 0; i < str2.length(); ++i)
+			{
+				if (hasAlphabet.find(str2[i]) != hasAlphabet.end())
+				{
+					++sameAlphabetCnt;
+					hasAlphabet.erase(str2[i]);
+				}
+			}
+			return ((double)sameAlphabetCnt / totalAlphabetCnt) * 40;
+		}
 	}
 
 private:
