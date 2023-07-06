@@ -10,64 +10,19 @@ public:
 		int A = getLongLength(str1, str2);
 		int B = getShortLength(str1, str2);
 
-		if (isSameLength(A, B)) return MAX_LENGTH_POINT;
+		if (isSame(A, B)) return MAX_LENGTH_POINT;
 		if (isDoubleLengthGap(A, B)) return MIN_LENGTH_POINT;
 		return getPartialLengthPoint(A, B);
 	}
 
-	void saveAlphabetToMap(string str1, map<char, bool>& hasAlphabet)
-	{
-		for (int i = 0; i < str1.length(); ++i)
-		{
-			if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
-			{
-				hasAlphabet.insert({ str1[i],true });
-			}
-		}
-	}
-
 	int getAlphaPoint(string str1, string str2)
 	{
-		map<char, bool> hasAlphabet;
-		saveAlphabetToMap(str1, hasAlphabet);
+		int totalAlphabetCnt = getTotalAlphabetCnt(str1, str2);
+		int sameAlphabetCnt = getSameAlphabetCnt(str1, str2);
 
-		bool isFound = false;
-		bool isDifferent = false;
-		for (int i = 0; i < str2.length(); ++i)
-		{
-			if(hasAlphabet.find(str2[i])!= hasAlphabet.end())
-			{
-				isFound = true;
-				hasAlphabet.erase(str2[i]);
-			}
-			else
-			{
-				isDifferent = true;
-			}
-		}
-		if (hasAlphabet.size() == 0 && isDifferent == false) return 40;
-		else if (isFound == false) return 0;
-		else
-		{
-			hasAlphabet.clear();
-			saveAlphabetToMap(str1, hasAlphabet);
-			saveAlphabetToMap(str2, hasAlphabet);
-			int totalAlphabetCnt = hasAlphabet.size();
-
-			//같은 알파벳 개수 세기
-			hasAlphabet.clear();
-			saveAlphabetToMap(str1, hasAlphabet);
-			int sameAlphabetCnt = 0;
-			for (int i = 0; i < str2.length(); ++i)
-			{
-				if (hasAlphabet.find(str2[i]) != hasAlphabet.end())
-				{
-					++sameAlphabetCnt;
-					hasAlphabet.erase(str2[i]);
-				}
-			}
-			return ((double)sameAlphabetCnt / totalAlphabetCnt) * 40;
-		}
+		if (isSame(totalAlphabetCnt, sameAlphabetCnt)) return MAX_ALPHABET_POINT;
+		else if (sameAlphabetCnt == 0) return MIN_ALPHABET_POINT;
+		return getPartialAlphabetPoint(totalAlphabetCnt, sameAlphabetCnt);
 	}
 
 private:
@@ -81,7 +36,7 @@ private:
 		return str2.length();
 	}
 
-	bool isSameLength(int A, int B) {
+	bool isSame(int A, int B) {
 		return A == B;
 	}
 
@@ -94,6 +49,49 @@ private:
 		return (B - GAP) * MAX_LENGTH_POINT / B;
 	}
 
+	void saveAlphabetToMap(string str1, map<char, bool>& hasAlphabet)
+	{
+		for (int i = 0; i < str1.length(); ++i)
+		{
+			if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
+			{
+				hasAlphabet.insert({ str1[i],true });
+			}
+		}
+	}
+
+	int getTotalAlphabetCnt(string str1, string str2)
+	{
+		map<char, bool> hasAlphabet;
+		saveAlphabetToMap(str1, hasAlphabet);
+		saveAlphabetToMap(str2, hasAlphabet);
+		return hasAlphabet.size();
+	}
+
+	int getSameAlphabetCnt(string str1, string str2)
+	{
+		map<char, bool> hasAlphabet;
+		saveAlphabetToMap(str1, hasAlphabet);
+		int sameAlphabetCnt = 0;
+		for (int i = 0; i < str2.length(); ++i)
+		{
+			if (hasAlphabet.find(str2[i]) != hasAlphabet.end())
+			{
+				++sameAlphabetCnt;
+				hasAlphabet.erase(str2[i]);
+			}
+		}
+		return sameAlphabetCnt;
+	}
+
+	int getPartialAlphabetPoint(int totalAlphabetCnt, int sameAlphabetCnt)
+	{
+		return ((double)sameAlphabetCnt / totalAlphabetCnt) * MAX_ALPHABET_POINT;
+	}
+
 	const int MAX_LENGTH_POINT = 60;
 	const int MIN_LENGTH_POINT = 0;
+
+	const int MAX_ALPHABET_POINT = 40;
+	const int MIN_ALPHABET_POINT = 0;
 };
