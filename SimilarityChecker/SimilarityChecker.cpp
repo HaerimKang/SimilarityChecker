@@ -15,13 +15,21 @@ public:
 		return getPartialLengthPoint(A, B);
 	}
 
+	void saveAlphabetToMap(string str1, map<char, bool>& hasAlphabet)
+	{
+		for (int i = 0; i < str1.length(); ++i)
+		{
+			if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
+			{
+				hasAlphabet.insert({ str1[i],true });
+			}
+		}
+	}
+
 	int getAlphaPoint(string str1, string str2)
 	{
 		map<char, bool> hasAlphabet;
-		for(int i=0; i< str1.length(); ++i)
-		{
-			hasAlphabet.insert({ str1[i],true });
-		}
+		saveAlphabetToMap(str1, hasAlphabet);
 
 		bool isFound = false;
 		bool isDifferent = false;
@@ -42,33 +50,13 @@ public:
 		else
 		{
 			hasAlphabet.clear();
-			//모든 알파벳 저장
-			for (int i = 0; i < str1.length(); ++i)
-			{
-				if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
-				{
-					hasAlphabet.insert({ str1[i],true });
-				}
-			}
-			for (int i = 0; i < str2.length(); ++i)
-			{
-				if (hasAlphabet.find(str2[i]) == hasAlphabet.end())
-				{
-					hasAlphabet.insert({ str2[i],true });
-				}
-			}
+			saveAlphabetToMap(str1, hasAlphabet);
+			saveAlphabetToMap(str2, hasAlphabet);
 			int totalAlphabetCnt = hasAlphabet.size();
 
 			//같은 알파벳 개수 세기
 			hasAlphabet.clear();
-			//모든 알파벳 저장
-			for (int i = 0; i < str1.length(); ++i)
-			{
-				if (hasAlphabet.find(str1[i]) == hasAlphabet.end())
-				{
-					hasAlphabet.insert({ str1[i],true });
-				}
-			}
+			saveAlphabetToMap(str1, hasAlphabet);
 			int sameAlphabetCnt = 0;
 			for (int i = 0; i < str2.length(); ++i)
 			{
